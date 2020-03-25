@@ -1,0 +1,12 @@
+{
+  "sacred": {
+    "sacred_host": "127.0.0.1",
+    "sacred_port": "27017",
+    "sacred_user": "sacred_user",
+    "sacred_pwd": "sacred_pwd",
+    "sacred_db": "sacred0000",
+    "n_metrics_points": 128,
+    "experiment_name": "Random"
+  },
+  "seed": 0
+}

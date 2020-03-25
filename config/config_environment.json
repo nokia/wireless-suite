@@ -1,0 +1,11 @@
+{
+  "env": {
+    "n_ues": 32,
+    "n_prbs": 25,
+    "buffer_max_size": 8,
+    "eirp_dbm": 13,
+    "f_carrier_mhz": 2655,
+    "max_pkt_size_bits": 41250,
+    "non_gbr_traffic_mean_interarrival_time_ttis": 10
+  }
+}
