@@ -15,11 +15,11 @@ from wireless.agents.round_robin_agent import *
 from wireless.agents.proportional_fair import *
 
 # Load agent parameters
-with open('config/config_agent.json') as f:
+with open('../../config/config_agent.json') as f:
     ac = json.load(f)
 
 # Configure experiment
-with open('config/config_sacred.json') as f:
+with open('../../config/config_sacred.json') as f:
     sc = json.load(f)   # Sacred Configuration
     ns = sc["sacred"]["n_metrics_points"]  # Number of points per episode to log in Sacred
     ex = Experiment(ac["agent"]["agent_type"])
@@ -30,7 +30,7 @@ mongo_db_url = f'mongodb://{sc["sacred"]["sacred_user"]}:{sc["sacred"]["sacred_p
 # ex.observers.append(MongoObserver(url=mongo_db_url, db_name=sc["sacred"]["sacred_db"]))  # Uncomment to save to DB
 
 # Load environment parameters
-with open('config/config_environment.json') as f:
+with open('../../config/config_environment.json') as f:
     ec = json.load(f)
     ex.add_config(ec)
 

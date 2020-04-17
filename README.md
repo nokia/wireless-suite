@@ -17,12 +17,21 @@ The code has been tested to work on Python 3.7 under Windows 10.
     git clone https://github.com/nokia/wireless-suite.git
     ```
 
-2. Use `pip` to install the package:
+2. Use `pip3` to install the package:
    ```
-   pip install --upgrade pip
-   pip install .
+   cd wireless-suite
+   pip3 install .
    ```
-3. Modify the script *scripts/launch_agent.py* to execute an  environment of your choosing and obtain performance results.
+
+3. **OPTIONAL**: Modify the script *scripts/launch_agent.py* to execute a problem of your choosing.
+
+4. **OPTIONAL**: Modify the configuration of your problem at *config/config_environment.json*.
+
+5. Simulate an agent-environment interaction:
+    ```
+   cd wireless/scripts
+   python launch_agent.py
+   ```
 
 ## Provided problems 
 
