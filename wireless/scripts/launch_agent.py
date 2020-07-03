@@ -4,15 +4,12 @@ Licensed under the BSD 3 Clause license
 SPDX-License-Identifier: BSD-3-Clause
 """
 import gym
-import numpy as np
 import json
 
 from sacred import Experiment
-from sacred.observers import MongoObserver
 
-from wireless.agents.random_agent import RandomAgent
-from wireless.agents.round_robin_agent import *
-from wireless.agents.proportional_fair import *
+from wireless.agents.time_freq_resource_allocation_v0.round_robin_agent import *
+from wireless.agents.time_freq_resource_allocation_v0.proportional_fair import *
 
 # Load agent parameters
 with open('../../config/config_agent.json') as f:
