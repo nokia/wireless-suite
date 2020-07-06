@@ -10,6 +10,7 @@ from sacred import Experiment
 
 from wireless.agents.time_freq_resource_allocation_v0.round_robin_agent import *
 from wireless.agents.time_freq_resource_allocation_v0.proportional_fair import *
+from wireless.agents.noma_ul_time_freq_resource_allocation_v0.noma_ul_proportional_fair import *
 
 # Load agent parameters
 with open('../../config/config_agent.json') as f:
@@ -19,7 +20,7 @@ with open('../../config/config_agent.json') as f:
 with open('../../config/config_sacred.json') as f:
     sc = json.load(f)   # Sacred Configuration
     ns = sc["sacred"]["n_metrics_points"]  # Number of points per episode to log in Sacred
-    ex = Experiment(ac["agent"]["agent_type"])
+    ex = Experiment(ac["agent"]["agent_type"],save_git_info=False)
     ex.add_config(sc)
     ex.add_config(ac)
 mongo_db_url = f'mongodb://{sc["sacred"]["sacred_user"]}:{sc["sacred"]["sacred_pwd"]}@' +\
@@ -43,25 +44,62 @@ def main(_run):
 
     # Simulate
     for ep in range(n_eps):  # Run episodes
-        env = gym.make('TimeFreqResourceAllocation-v0', n_ues=_run.config['env']['n_ues'],
-                       n_prbs=_run.config['env']['n_prbs'], buffer_max_size=_run.config['env']['buffer_max_size'],
-                       eirp_dbm=_run.config['env']['eirp_dbm'], f_carrier_mhz=_run.config['env']['f_carrier_mhz'],
-                       max_pkt_size_bits=_run.config['env']['max_pkt_size_bits'],
-                       it=_run.config['env']['non_gbr_traffic_mean_interarrival_time_ttis'])  # Init environment
-        env.seed(seed=_run.config['seed'] + ep)
-
-        # Init agent
-        if ac["agent"]["agent_type"] == "random":
-            agent = RandomAgent(env.action_space)
-            agent.seed(seed=_run.config['seed'] + ep)
-        elif ac["agent"]["agent_type"] == "round robin":
-            agent = RoundRobinAgent(env.action_space, env.K, env.L)
-        elif ac["agent"]["agent_type"] == "round robin iftraffic":
-            agent = RoundRobinIfTrafficAgent(env.action_space, env.K, env.L)
-        elif ac["agent"]["agent_type"] == "proportional fair":
-            agent = ProportionalFairAgent(env.action_space, env.K, env.L)
+        if _run.config['env']['env'] == 'TimeFreqResourceAllocation-v0':
+            env = gym.make('TimeFreqResourceAllocation-v0', n_ues=_run.config['env']['n_ues'],
+                           n_prbs=_run.config['env']['n_prbs'], buffer_max_size=_run.config['env']['buffer_max_size'],
+                           eirp_dbm=_run.config['env']['eirp_dbm'], f_carrier_mhz=_run.config['env']['f_carrier_mhz'],
+                           max_pkt_size_bits=_run.config['env']['max_pkt_size_bits'],
+                           it=_run.config['env']['non_gbr_traffic_mean_interarrival_time_ttis'])  # Init environment
+            env.seed(seed=_run.config['seed'] + ep) 
+    
+            # Init agent
+            if ac["agent"]["agent_type"] == "random":
+                agent = RandomAgent(env.action_space)
+                agent.seed(seed=_run.config['seed'] + ep)
+            elif ac["agent"]["agent_type"] == "round robin":
+                agent = RoundRobinAgent(env.action_space, env.K, env.L)
+            elif ac["agent"]["agent_type"] == "round robin iftraffic":
+                agent = RoundRobinIfTrafficAgent(env.action_space, env.K, env.L)
+            elif ac["agent"]["agent_type"] == "proportional fair":
+                agent = ProportionalFairAgent(env.action_space, env.K, env.L)
+            elif ac["agent"]["agent_type"] == "proportional fair channel aware":
+                agent = ProportionalFairChannelAwareAgent(env.action_space, env.K, env.L)
+            else:
+                raise NotImplemented
+                
+        elif _run.config['env']['env'] == 'NomaULTimeFreqResourceAllocation-v0':
+            env = gym.make('NomaULTimeFreqResourceAllocation-v0', n_ues=_run.config['env']['n_ues'],
+                           n_prbs=_run.config['env']['n_prbs'], n_ues_per_prb=_run.config['env']['n_ues_per_prb'], buffer_max_size=_run.config['env']['buffer_max_size'],
+                           eirp_dbm=_run.config['env']['eirp_dbm'], f_carrier_mhz=_run.config['env']['f_carrier_mhz'],
+                           max_pkt_size_bits=_run.config['env']['max_pkt_size_bits'],
+                           it=_run.config['env']['non_gbr_traffic_mean_interarrival_time_ttis'])  # Init environment
+            env.seed(seed=_run.config['seed'] + ep)
+            
+            # Init agent
+            if ac["agent"]["agent_type"] == "random":
+                agent = RandomAgent(env.action_space)
+                agent.seed(seed=_run.config['seed'] + ep)
+            elif ac["agent"]["agent_type"] == "proportional fair channel aware":
+                agent = NomaULProportionalFairChannelAwareAgent(env.action_space, env.K, env.M, env.L, env.n_mw, env.SINR_COEFF)
+            else:
+                raise NotImplemented
         else:
             raise NotImplemented
+    
+            # Init agent
+            if ac["agent"]["agent_type"] == "random":
+                agent = RandomAgent(env.action_space)
+                agent.seed(seed=_run.config['seed'] + ep)
+            elif ac["agent"]["agent_type"] == "round robin":
+                agent = RoundRobinAgent(env.action_space, env.K, env.L)
+            elif ac["agent"]["agent_type"] == "round robin iftraffic":
+                agent = RoundRobinIfTrafficAgent(env.action_space, env.K, env.L)
+            elif ac["agent"]["agent_type"] == "proportional fair":
+                agent = ProportionalFairAgent(env.action_space, env.K, env.L)
+            elif ac["agent"]["agent_type"] == "proportional fair channel aware":
+                agent = ProportionalFairChannelAwareAgent(env.action_space, env.K, env.L)
+            else:
+                raise NotImplemented
 
         reward = 0
         done = False

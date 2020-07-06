@@ -1,6 +1,6 @@
 {
   "agent": {
-    "agent_type": "round robin",
+    "agent_type": "proportional fair channel aware",
     "t_max": 65536,
     "n_episodes": 16
   }
