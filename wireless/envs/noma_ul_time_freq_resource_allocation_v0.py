@@ -6,6 +6,7 @@ SPDX-License-Identifier: BSD-3-Clause
 
 from .time_freq_resource_allocation_v0 import *
 
+
 class NomaULTimeFreqResourceAllocationV0(TimeFreqResourceAllocationV0):
 
     def __init__(self, n_ues=32, n_prbs=25, n_ues_per_prb=2, buffer_max_size=32, eirp_dbm=13, f_carrier_mhz=2655,
