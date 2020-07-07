@@ -4,18 +4,17 @@ Licensed under the BSD 3 Clause license
 SPDX-License-Identifier: BSD-3-Clause
 """
 import pytest
-import random
 import gym
 import numpy as np
 
 
-@pytest.fixture(params=[2,3])
+@pytest.fixture(params=[2, 3])
 def env(request):
     env = gym.make('NomaULTimeFreqResourceAllocation-v0', n_ues_per_prb=request.param)  # Init environment
     yield env
 
 
-@pytest.fixture(params=[2,3])
+@pytest.fixture(params=[2, 3])
 def env64(request):
     env = gym.make('NomaULTimeFreqResourceAllocation-v0', n_ues=64, n_ues_per_prb=request.param)  # Init environment
     yield env

@@ -3,7 +3,7 @@
 Licensed under the BSD 3 Clause license
 SPDX-License-Identifier: BSD-3-Clause
 """
-from .random_agent import RandomAgent
+from wireless.agents.random_agent import RandomAgent
 import numpy as np
 
 
