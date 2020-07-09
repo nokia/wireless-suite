@@ -46,27 +46,40 @@ Delay Budget (PDP).
 
 You are invited to develop a new agent that interacts with this environment and takes effective resource allocation
 decisions.
-Four sample agents are provided for reference in the *wireless/agents* folder.
+Five sample agents are provided for reference in the *wireless/agents* folder.
 The performance obtained by the default agents on the default environment configuration is:
-* Random                       -69590
-* Round Robin                  -69638
-* Round Robin IfTraffic        -3284
-* Proportional Fair            -9595
+* Random                          -69590
+* Round Robin                     -69638
+* Round Robin IfTraffic           -3284
+* Proportional Fair               -9595
+* Proportional Fair Channel Aware -1729
 
-Note that the above average rewards are negative values. The best performing agent is thus the Round Robin IfTraffic.
+Note that the above average rewards are negative values. The best performing agent is thus the Proportional Fair Channel Aware.
 
 Additional details about this problem are provided in document *wireless/doc/TimeFreqResourceAllocation-v0.pdf*
 
-#### Evaluation
-The script *wireless/scripts/launch_agent.py* runs 16 episodes with a maximum of 65536 time steps each, and collects the reward
-obtained by the agent on each time step. The result is calculated as the average reward obtained in all time steps on
-all episodes.
+### NomaULTimeFreqResourceAllocation-v0
+This environment is an extension of the above TimeFreqResourceAllocation-v0 environment, with the difference that it
+allows multiple UEs to be allocated on a time-frequency resource. It consists on an uplink power-domain NOMA system,
+wherein the base station receives superimposed signals from the multiplexed UEs and performs successive interference
+cancellation (SIC) to decode them. 
+
+The default environment can be obtained by setting `"env": "NomaULTimeFreqResourceAllocation-v0"` and
+`"n_ues_per_prb": 2` in *config/config_environment.json*. 
+Two sample agents are provided for reference in the *wireless/agents* folder. 
+The performance obtained on the default environment configuration is:
+* Random                          -33499
+* NOMA UL Proportional Fair Channel Aware -1431
+
+### Evaluation
+The simulated environment can be chosen by setting `"env": "TimeFreqResourceAllocation-v0"` or `"env": "NomaULTimeFreqResourceAllocation-v0"` in *config/config_environment.json*. The script *wireless/scripts/launch_agent.py* runs 16 episodes with a maximum of 65536 time steps each, and collects the reward
+obtained by the agent on each time step. The result is calculated as the average reward obtained in all time steps on all episodes.
 
 ## How to contribute
 There are two main ways of contributing to Wireless Suite:
 
-1. **Implementing new problems**: The first version of Wireless Suite contains only one problem implementation. New
-problems can be easily added as simple variations of the first one (e.g. by changing its parameters), or by introducing
+1. **Implementing new problems**: This version of Wireless Suite contains two problems implementation. New
+problems can be easily added as simple variations of the existing ones (e.g. by changing their parameters), or by introducing
 fully new problem implementations (e.g. Adaptive Modulation and Coding, Open Loop Power Control, Handover optimization,
 etc).
 
