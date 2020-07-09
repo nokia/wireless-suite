@@ -46,7 +46,7 @@ Delay Budget (PDP).
 
 You are invited to develop a new agent that interacts with this environment and takes effective resource allocation
 decisions.
-Four sample agents are provided for reference in the *wireless/agents* folder.
+Five sample agents are provided for reference in the *wireless/agents* folder.
 The performance obtained by the default agents on the default environment configuration is:
 * Random                          -69590
 * Round Robin                     -69638
@@ -73,14 +73,13 @@ The performance obtained on the default environment configuration is:
 
 ### Evaluation
 The simulated environment can be chosen by setting `"env": "TimeFreqResourceAllocation-v0"` or `"env": "NomaULTimeFreqResourceAllocation-v0"` in *config/config_environment.json*. The script *wireless/scripts/launch_agent.py* runs 16 episodes with a maximum of 65536 time steps each, and collects the reward
-obtained by the agent on each time step. The result is calculated as the average reward obtained in all time steps on
-all episodes.
+obtained by the agent on each time step. The result is calculated as the average reward obtained in all time steps on all episodes.
 
 ## How to contribute
 There are two main ways of contributing to Wireless Suite:
 
-1. **Implementing new problems**: The first version of Wireless Suite contains only one problem implementation. New
-problems can be easily added as simple variations of the first one (e.g. by changing its parameters), or by introducing
+1. **Implementing new problems**: This version of Wireless Suite contains two problems implementation. New
+problems can be easily added as simple variations of the existing ones (e.g. by changing their parameters), or by introducing
 fully new problem implementations (e.g. Adaptive Modulation and Coding, Open Loop Power Control, Handover optimization,
 etc).
 
