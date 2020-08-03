@@ -89,3 +89,8 @@ etc).
 1. [Open AI Gym Documentation](http://gym.openai.com/docs/)
 2. [How to create new environments for Gym](https://github.com/openai/gym/blob/master/docs/creating-environments.md)
 3. [Sacred Documentation](https://sacred.readthedocs.io/en/stable/index.html)
+
+
+## License
+
+This project is licensed under the BSD-3-Clause license - see the [LICENSE](https://github.com/nokia/wireless-suite/blob/master/LICENSE).
