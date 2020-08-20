@@ -85,21 +85,6 @@ def main(_run):
                 raise NotImplemented
         else:
             raise NotImplemented
-    
-            # Init agent
-            if ac["agent"]["agent_type"] == "random":
-                agent = RandomAgent(env.action_space)
-                agent.seed(seed=_run.config['seed'] + ep)
-            elif ac["agent"]["agent_type"] == "round robin":
-                agent = RoundRobinAgent(env.action_space, env.K, env.L)
-            elif ac["agent"]["agent_type"] == "round robin iftraffic":
-                agent = RoundRobinIfTrafficAgent(env.action_space, env.K, env.L)
-            elif ac["agent"]["agent_type"] == "proportional fair":
-                agent = ProportionalFairAgent(env.action_space, env.K, env.L)
-            elif ac["agent"]["agent_type"] == "proportional fair channel aware":
-                agent = ProportionalFairChannelAwareAgent(env.action_space, env.K, env.L)
-            else:
-                raise NotImplemented
 
         reward = 0
         done = False
