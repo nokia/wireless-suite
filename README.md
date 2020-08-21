@@ -71,6 +71,15 @@ The performance obtained on the default environment configuration is:
 * Random                          -33499
 * NOMA UL Proportional Fair Channel Aware -1431
 
+### UlOpenLoopPowerControl-v0
+This environment simulates a free-space scenario with a Base Station located at coordinates [0, 0] and one UE at a
+random location. On each time step, the UE moves linearly in a random direction with constant speed 2 m/s . The agent
+interacting with the environment plays the role of the the Base Station. On each time step the agent must select one of
+four possible Power Control (PC) commands to increase/decrease the uplink transmit power. The objective is to measure an
+uplink SNR as close as possible to the SNR target (4 dB by default).
+
+See the file `envs/umts_olpc.py` for more details.
+
 ### Evaluation
 The simulated environment can be chosen by setting `"env": "TimeFreqResourceAllocation-v0"` or `"env": "NomaULTimeFreqResourceAllocation-v0"` in *config/config_environment.json*. The script *wireless/scripts/launch_agent.py* runs 16 episodes with a maximum of 65536 time steps each, and collects the reward
 obtained by the agent on each time step. The result is calculated as the average reward obtained in all time steps on all episodes.
