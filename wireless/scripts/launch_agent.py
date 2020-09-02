@@ -11,6 +11,7 @@ from sacred import Experiment
 from wireless.agents.time_freq_resource_allocation_v0.round_robin_agent import *
 from wireless.agents.time_freq_resource_allocation_v0.proportional_fair import *
 from wireless.agents.noma_ul_time_freq_resource_allocation_v0.noma_ul_proportional_fair import *
+from wireless.agents.bosch_agent import BoschAgent
 
 # Load agent parameters
 with open('../../config/config_agent.json') as f:
@@ -20,7 +21,7 @@ with open('../../config/config_agent.json') as f:
 with open('../../config/config_sacred.json') as f:
     sc = json.load(f)   # Sacred Configuration
     ns = sc["sacred"]["n_metrics_points"]  # Number of points per episode to log in Sacred
-    ex = Experiment(ac["agent"]["agent_type"],save_git_info=False)
+    ex = Experiment(ac["agent"]["agent_type"], save_git_info=False)
     ex.add_config(sc)
     ex.add_config(ac)
 mongo_db_url = f'mongodb://{sc["sacred"]["sacred_user"]}:{sc["sacred"]["sacred_pwd"]}@' +\
@@ -66,6 +67,8 @@ def main(_run):
                 agent = ProportionalFairChannelAwareAgent(env.action_space, env.K, env.L)
             elif ac["agent"]["agent_type"] == "knapsack":
                 agent = Knapsackagent(env.action_space, env.K, env.L, env.Nf)
+            elif ac["agent"]["agent_type"] == "Bosch":
+                agent = BoschAgent(env.action_space, env.K, env.L, env.max_pkt_size_bits)
             else:
                 raise NotImplemented
                 
