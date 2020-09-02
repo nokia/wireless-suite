@@ -65,6 +65,8 @@ def main(_run):
                 agent = ProportionalFairAgent(env.action_space, env.K, env.L)
             elif ac["agent"]["agent_type"] == "proportional fair channel aware":
                 agent = ProportionalFairChannelAwareAgent(env.action_space, env.K, env.L)
+            elif ac["agent"]["agent_type"] == "knapsack":
+                agent = Knapsackagent(env.action_space, env.K, env.L, env.Nf)
             elif ac["agent"]["agent_type"] == "Bosch":
                 agent = BoschAgent(env.action_space, env.K, env.L, env.max_pkt_size_bits)
             else:
