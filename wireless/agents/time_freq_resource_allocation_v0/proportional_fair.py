@@ -76,10 +76,10 @@ class Knapsackagent(ProportionalFairAgent):
         self.Nf = nprb
         self.window = self.Nf * 10
 
-    def _calculate_priorities(self, cqi, o, b, buffer_size_per_ue, throughput):
+    def _calculate_priorities(self, cqi, o, b, buffer_size_per_ue):
         # Normalized values
         k_cqi = (cqi / 15)
-        k_buffer = (buffer_size_per_ue / (throughput + 1))
+        k_buffer = (buffer_size_per_ue / (self.r + 1))
         k_age = (o / b)
         k_fairness = (1 / (1 + self.n))
         # tanh as ranking function for values
@@ -93,7 +93,7 @@ class Knapsackagent(ProportionalFairAgent):
 
         o, cqi, b, buffer_size_per_ue = self.parse_state(state, self.K, self.L)
 
-        priorities = self._calculate_priorities(cqi, o, b, buffer_size_per_ue, self.r)
+        priorities = self._calculate_priorities(cqi, o, b, buffer_size_per_ue)
 
         self.buffer_size_moving_average(state)
 
@@ -104,10 +104,8 @@ class Knapsackagent(ProportionalFairAgent):
         return action
 
     def buffer_size_moving_average(self, state):
-        s = np.reshape(state[self.K:self.K * (1 + self.L)],
-                       (self.K, self.L))  # Sizes in bits of packets in UEs' buffers
+        s = np.reshape(state[self.K:self.K * (1 + self.L)], (self.K, self.L))  # Size in bits of packets in UEs' buffers
         buffer_size_per_ue = np.sum(s, axis=1)
         # Moving Average of buffer sizes
         if self.t % self.Nf == 0 and self.t != 0:
             self.r = (1 - self.Nf / self.window) * self.r + buffer_size_per_ue * self.Nf / self.window
-
