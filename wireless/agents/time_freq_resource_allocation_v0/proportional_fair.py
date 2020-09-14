@@ -74,12 +74,12 @@ class Knapsackagent(ProportionalFairAgent):
         super().__init__(action_space, n_ues, buffer_max_size)
         self.r = None
         self.Nf = nprb
-        self.window = self.Nf * 10
+        self.window = self.Nf * 15
 
-    def _calculate_priorities(self, cqi, o, b, buffer_size_per_ue, throughput):
+    def _calculate_priorities(self, cqi, o, b, buffer_size_per_ue):
         # Normalized values
         k_cqi = (cqi / 15)
-        k_buffer = (buffer_size_per_ue / (throughput + 1))
+        k_buffer = (buffer_size_per_ue / (self.r + 1))
         k_age = (o / b)
         k_fairness = (1 / (1 + self.n))
         # tanh as ranking function for values
@@ -93,7 +93,7 @@ class Knapsackagent(ProportionalFairAgent):
 
         o, cqi, b, buffer_size_per_ue = self.parse_state(state, self.K, self.L)
 
-        priorities = self._calculate_priorities(cqi, o, b, buffer_size_per_ue, self.r)
+        priorities = self._calculate_priorities(cqi, o, b, buffer_size_per_ue)
 
         self.buffer_size_moving_average(state)
 
