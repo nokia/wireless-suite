@@ -74,7 +74,7 @@ class Knapsackagent(ProportionalFairAgent):
         super().__init__(action_space, n_ues, buffer_max_size)
         self.r = None
         self.Nf = nprb
-        self.window = self.Nf * 10
+        self.window = self.Nf * 15
 
     def _calculate_priorities(self, cqi, o, b, buffer_size_per_ue):
         # Normalized values
