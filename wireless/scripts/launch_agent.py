@@ -8,10 +8,10 @@ import json
 
 from sacred import Experiment
 
+from wireless.agents.bosch_agent import BoschAgent
 from wireless.agents.time_freq_resource_allocation_v0.round_robin_agent import *
 from wireless.agents.time_freq_resource_allocation_v0.proportional_fair import *
 from wireless.agents.noma_ul_time_freq_resource_allocation_v0.noma_ul_proportional_fair import *
-from wireless.agents.bosch_agent import BoschAgent
 
 # Load agent parameters
 with open('../../config/config_agent.json') as f:
@@ -51,8 +51,8 @@ def main(_run):
                            eirp_dbm=_run.config['env']['eirp_dbm'], f_carrier_mhz=_run.config['env']['f_carrier_mhz'],
                            max_pkt_size_bits=_run.config['env']['max_pkt_size_bits'],
                            it=_run.config['env']['non_gbr_traffic_mean_interarrival_time_ttis'])  # Init environment
-            env.seed(seed=_run.config['seed'] + ep) 
-    
+            env.seed(seed=_run.config['seed'] + ep)
+
             # Init agent
             if ac["agent"]["agent_type"] == "random":
                 agent = RandomAgent(env.action_space)
