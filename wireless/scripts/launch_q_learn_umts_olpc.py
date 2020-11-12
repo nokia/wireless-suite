@@ -76,7 +76,7 @@ with open('../../config/config_environment.json') as f:
 @ex.automain
 def main(_run):
     env = gym.make('UlOpenLoopPowerControl-v0', f_carrier_mhz=_run.config['env']['f_carrier_mhz'],
-                   t_max=_run.config['agent']['t_max'])  # Init environment
+                   t_max=max_steps_per_episode)  # Init environment
 
     agent = QLearningAgent(seed=_run.config['seed'], num_actions=env.action_space.n)
 
